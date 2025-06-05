@@ -1,5 +1,5 @@
-import type { User } from "../types/User";
-
+import type { User } from "../../types/User";
+import { Component} from "./style";
 
 interface Props {
     users: User[];
@@ -9,6 +9,7 @@ interface Props {
 
 export function UserList({users, onDelete, onEdit}: Props){
     return(
+        <Component>
         <ul>
             {users.map((user) => (
                 <li key={user.id}>
@@ -19,5 +20,6 @@ export function UserList({users, onDelete, onEdit}: Props){
                 </li>
             ))}
         </ul>
+        </Component> 
     )
 }

@@ -1,4 +1,8 @@
-:root {
+import { createGlobalStyle } from "styled-components";
+
+export const GlobalStyle = createGlobalStyle`
+
+    :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
@@ -25,10 +29,11 @@ a:hover {
 body {
   margin: 0;
   display: flex;
-  place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  justify-content: center;
 }
+
 
 h1 {
   font-size: 3.2em;
@@ -36,6 +41,7 @@ h1 {
 }
 
 button {
+  height: 50px;
   border-radius: 8px;
   border: 1px solid transparent;
   padding: 0.6em 1.2em;
@@ -46,6 +52,8 @@ button {
   cursor: pointer;
   transition: border-color 0.25s;
 }
+
+
 button:hover {
   border-color: #646cff;
 }
@@ -53,6 +61,13 @@ button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
+
+input{
+  height: 40px;        
+}
+
+
+
 
 @media (prefers-color-scheme: light) {
   :root {
@@ -66,3 +81,6 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+
+`

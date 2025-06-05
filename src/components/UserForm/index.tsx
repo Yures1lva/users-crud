@@ -1,6 +1,7 @@
 import { useState, useEffect, type FormEvent } from "react";
 
-import type { User } from "../types/User";
+import type { User } from "../../types/User";
+import { FormStyle } from "./styles";
 
 interface Props {
     onSubmit: (user: Omit<User, "id">) => void;
@@ -26,6 +27,7 @@ export function UseForm({onSubmit, initialData}: Props){
     
     return (
         <form onSubmit={handleSubmit}>
+            <FormStyle/>
             <input 
                 type="text" 
                 placeholder="Nome do usuário" 
