@@ -1,45 +1,52 @@
+import { UseForm } from '@/components/UserForm';
+import { UserList } from '@/components/UserList';
+import { useUsers } from "@/hooks/useUser";
+import { useUserForm } from "@/hooks/useForm";
 import { useState } from "react";
-import { v4 as uuidv4 } from "uuid";
-import { UseForm } from "../components/UserForm";
-import { UserList } from "../components/UserList";
-import type { User } from "../types/User";
 
-export function Home(){
-    const [users, setUsers] = useState<User[]>([]);
+export function Home() {
+const { users, loading, error, refetch } = useUsers();
+const { createUser, updateUser, deleteUser, loadingForm, errorForm, clearError } = useUserForm() as any;
 
-    const [editingUser, setEditingUser] = useState<User | null>(null);
+const [initialData, setInitialData] = useState(null);
 
-    const addUser = (user: Omit<User, "id">) => {
-        const newUser = {...user, id: uuidv4()};
-        setUsers([...users, newUser]);
-    };
 
-    const updateUser = (user: Omit<User, "id">) => {
-        if(!editingUser) return;
-        const updated = users.map((u) => 
-            u.id === editingUser.id ? { ...u, name: user.name } : u 
-        );
-        setUsers(updated);
-        setEditingUser(null);
-    }
 
-    const deletUser = (id: string) => {
-        setUsers(users.filter((user) => user.id !== id));
-    };
-    
-    return (
-                <div>
-                    <h1>Usuários</h1>
-                    <UseForm 
-                        onSubmit={editingUser ? updateUser: addUser}
-                        initialData={editingUser}
-                    />
-                    <UserList 
-                        users={users}
-                        onDelete={deletUser}
-                        onEdit={(user) => setEditingUser(user)}
-                    />
-                </div>
-            )
+function handleFinish() {
+    refetch();
+  }
+
+function handleDelete(id:number) {
+  deleteUser(id).then(() => {
+    refetch();
+  }).catch((error:any) => {
+    console.error("Erro ao deletar usuário:", error);
+    alert(error.message || 'Erro ao deletar usuário');
+  });
 }
 
+function handleUpdate(userData:any) {
+  setInitialData(userData);
+}
+    return (
+    <div>
+      <h1>Usuários</h1>
+      <UseForm
+        initialData={initialData}
+        onFinish={handleFinish}
+        createUser={createUser}
+        updateUser={updateUser}
+        loadingForm={loadingForm}
+        errorForm={errorForm}
+        clearError={clearError}
+      />
+      <UserList
+        users={users}
+        loading={loading}
+        error={error}
+        onDelete={handleDelete}
+        onUpdate={handleUpdate}
+      />
+    </div>
+  );
+}

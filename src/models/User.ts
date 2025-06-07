@@ -1,5 +1,11 @@
-export type Role = 'ADMIN' | 'USER' | 'MANAGER';
+export type Role = 'ADMIN' | 'USER';
 
+export type UserInput = {
+  name: string;
+  email: string;
+  cpf: string;
+  role: Role;
+};
 
 class User {
   public id: number;

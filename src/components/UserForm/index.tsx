@@ -1,42 +1,100 @@
-import { useState, useEffect, type FormEvent } from "react";
+import { useState, useEffect } from "react";
+import User from '@/models/User';
+import type { UserInput } from '@/models/User';
 
-import type { User } from "../../types/User";
-import { FormStyle } from "./styles";
 
-interface Props {
-    onSubmit: (user: Omit<User, "id">) => void;
-    initialData?: User | null;
+interface UserFormProps {
+  initialData?: User | null;
+  onFinish: () => void;
+  createUser: (userData: UserInput) => Promise<User | null> ;
+  updateUser: (id: number, userData: UserInput) => Promise<User | null> ;
+  loadingForm: boolean;
+  errorForm: string | null;
+  clearError: () => void;
+
+
 }
 
-export function UseForm({onSubmit, initialData}: Props){
-    const [name, setName] = useState("");
+export function UseForm({ initialData = null, onFinish, createUser, updateUser, loadingForm, errorForm, clearError  }: UserFormProps){
+
+
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [cpf, setCpf] = useState('');
+    const [role, setRole] = useState<'ADMIN' | 'USER'>('USER');
+
 
     useEffect(() => {
-        if(initialData) {
-            setName(initialData.name);
+        if (initialData) {
+        setName(initialData.name);
+        setEmail(initialData.email);
+        setCpf(initialData.cpf);
+        setRole(initialData.role);
         }
     }, [initialData]);
 
-    const handleSubmit = ( e: FormEvent) => {
-        e.preventDefault();
-        if (!name.trim()) return;
-        onSubmit({ name });
-        setName("");
-    };
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
 
+    const userData: UserInput = { name, email, cpf, role };
+
+    try {
+      if (initialData) {
+        await updateUser(initialData.id, userData);
+      } else {
+        await createUser(userData);
+      }
+
+      onFinish();
+    } catch (error:any) {
+      console.error("Erro ao salvar usuário:", error.message);
+      //alert("Erro ao salvar usuário: " + error.message + ".");
+    }
+  }
     
     return (
         <form onSubmit={handleSubmit}>
-            <FormStyle/>
-            <input 
-                type="text" 
-                placeholder="Nome do usuário" 
-                value={name} 
-                onChange={(e) => setName(e.target.value)} 
-            />
-            <button type="submit">
-                {initialData? "Atualizar":"Adicionar"}
-            </button>
+        <h2>{initialData ? 'Atualizar Usuário' : 'Adicionar Usuário'}</h2>
+
+        {errorForm && (
+            <p style={{ color: 'red' }}>
+            {errorForm}
+            <button onClick={clearError} type="button">x</button>
+            </p>
+        )}
+
+        <input
+            type="text"
+            placeholder="Nome"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+        />
+
+        <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+        />
+
+        <input
+            type="text"
+            placeholder="CPF"
+            value={cpf}
+            onChange={(e) => setCpf(e.target.value)}
+            required
+        />
+
+        <select value={role} onChange={(e) => setRole(e.target.value as 'USER' | 'ADMIN')}>
+            <option value="USER">Usuário</option>
+            <option value="ADMIN">Administrador</option>
+        </select>
+
+        <button type="submit" disabled={loadingForm}>
+            {loadingForm ? 'Salvando...' : initialData ? 'Atualizar' : 'Adicionar'}
+        </button>
         </form>
     );
 }

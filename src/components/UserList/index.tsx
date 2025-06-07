@@ -1,21 +1,31 @@
-import type { User } from "../../types/User";
 import { Component} from "./style";
+import User from "@/models/User"
 
-interface Props {
-    users: User[];
-    onDelete: (id: string) => void;
-    onEdit: (user: User) => void;
+interface UserListProps {
+  users: User[];
+  loading: boolean;
+  error: string | null;
+  onDelete?: (id: number ) => void
+  onUpdate?: (userData: any ) => void
 }
 
-export function UserList({users, onDelete, onEdit}: Props){
+export function UserList({ users, loading, error, onDelete, onUpdate }: UserListProps){
+
+    if (loading) {
+        return <p>Carregando...</p>;
+    }
+    if (error) {
+        return <p>Ocorreu um erro: {error}</p>;
+    }
+
     return(
         <Component>
         <ul>
             {users.map((user) => (
                 <li key={user.id}>
                     {user.name}
-                    <button onClick={() => onEdit(user)}>Editar</button>
-                    <button onClick={() => onDelete(user.id)}>Deletar</button>
+                    <button onClick={()=> onUpdate && onUpdate(user)}>Editar</button>
+                    <button onClick={()=> onDelete && onDelete(user.id)}>Deletar</button>
 
                 </li>
             ))}

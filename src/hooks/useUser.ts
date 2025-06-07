@@ -4,12 +4,16 @@ import  UserService from "@/service/user/user-service";
 
 
 export function useUsers() {
+
     const [users, setUsers] = useState<User[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
 
 
-    useEffect(()=> {fetchUsers()});
+    useEffect(()=> {
+        fetchUsers();
+
+    }, []);
 
     async function fetchUsers() {
         try {
@@ -18,7 +22,8 @@ export function useUsers() {
             setUsers(data);
         } catch (error:any) {
             setError(error.message || 'Erro ao buscar usuarios');
-        }finally{
+        }
+        finally{
             setLoading(false);
         }
     }
