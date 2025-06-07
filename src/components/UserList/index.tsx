@@ -23,9 +23,9 @@ export function UserList({ users, loading, error, onDelete, onUpdate }: UserList
         <ul>
             {users.map((user) => (
                 <li key={user.id}>
-                    {user.name}
-                    <button onClick={()=> onUpdate && onUpdate(user)}>Editar</button>
-                    <button onClick={()=> onDelete && onDelete(user.id)}>Deletar</button>
+                    <p>{user.name}</p>
+                    <div><button onClick={()=> onUpdate && onUpdate(user)}>Editar</button>
+                    <button onClick={()=> onDelete && onDelete(user.id)}>Deletar</button></div>
 
                 </li>
             ))}
