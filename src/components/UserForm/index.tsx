@@ -31,14 +31,17 @@ export function UseForm({ initialData = null, onFinish, createUser, updateUser, 
         setCpf(initialData.cpf);
         setRole(initialData.role);
         }else{
-            setName('');
-            setEmail('');
-            setCpf('');
-            setRole('USER');
-            console.log("Form Limpado")
+            handleClearForm();
         }
     }, [initialData]);
 
+  function handleClearForm() {
+    setName('');
+    setEmail('');
+    setCpf('');
+    setRole('USER');
+    console.log("Formulário limpo");
+}
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
 
@@ -102,7 +105,8 @@ export function UseForm({ initialData = null, onFinish, createUser, updateUser, 
         <button type="submit" disabled={loadingForm}>
             {loadingForm ? 'Salvando...' : initialData ? 'Atualizar' : 'Adicionar'}
         </button>
-        <button type="button" onClick={onClear}>Limpar</button>
+        <button type="button" onClick={() =>{onClear?.(); handleClearForm();}}>Limpar</button>
+
 
         </FormStyle>
     );
