@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import User from '@/models/User';
 import type { UserInput } from '@/models/User';
-import { FormStyle } from "./styles";
+import { FormStyle } from "./user-form.style";
 
 
 interface UserFormProps {

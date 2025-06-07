@@ -1,4 +1,4 @@
-import { Component} from "./style";
+import { Component} from "./user-list.style";
 import User from "@/models/User"
 
 interface UserListProps {

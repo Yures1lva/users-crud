@@ -1,5 +1,5 @@
-import { UseForm } from '@/components/UserForm';
-import { UserList } from '@/components/UserList';
+import { UseForm } from '@/components/UserForm/user-form.component';
+import { UserList } from '@/components/UserList/user-list.component';
 import { useUsers } from "@/hooks/useUser";
 import { useUserForm } from "@/hooks/useForm";
 import { useState } from "react";
