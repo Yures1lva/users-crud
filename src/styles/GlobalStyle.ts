@@ -26,13 +26,6 @@ a:hover {
   color: #535bf2;
 }
 
-body {
-  margin: 0;
-  display: flex;
-  min-width: 320px;
-  min-height: 100vh;
-  justify-content: center;
-}
 
 
 h1 {

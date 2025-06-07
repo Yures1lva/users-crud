@@ -20,6 +20,7 @@ export function UserList({ users, loading, error, onDelete, onUpdate }: UserList
 
     return(
         <Component>
+        <h2>Lista de usuários</h2>
         <ul>
             {users.map((user) => (
                 <li key={user.id}>
