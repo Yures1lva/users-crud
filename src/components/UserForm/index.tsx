@@ -101,7 +101,7 @@ export function UseForm({ initialData = null, onFinish, createUser, updateUser, 
         <button type="submit" disabled={loadingForm}>
             {loadingForm ? 'Salvando...' : initialData ? 'Atualizar' : 'Adicionar'}
         </button>
-        <button type="button" onClick={onClear}>Cancelar</button>
+        <button type="button" onClick={onClear}>Limpar</button>
 
         </form>
     );
