@@ -2,9 +2,10 @@ import styled from "styled-components"
 export const Component = styled.div`
 
 
-    margin: 0;
-    padding: 0;
+    margin: 10px 0;
+    padding: 20px;
     background:rgb(39, 39, 39);
+    border-radius: 8px;
 
     ul{
         list-style: none;

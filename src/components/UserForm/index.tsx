@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import User from '@/models/User';
 import type { UserInput } from '@/models/User';
+import { FormStyle } from "./styles";
 
 
 interface UserFormProps {
@@ -58,7 +59,7 @@ export function UseForm({ initialData = null, onFinish, createUser, updateUser, 
   }
     
     return (
-        <form onSubmit={handleSubmit}>
+        <FormStyle onSubmit={handleSubmit}>
         <h2>{initialData ? 'Atualizar Usuário' : 'Adicionar Usuário'}</h2>
 
         {errorForm && (
@@ -101,8 +102,8 @@ export function UseForm({ initialData = null, onFinish, createUser, updateUser, 
         <button type="submit" disabled={loadingForm}>
             {loadingForm ? 'Salvando...' : initialData ? 'Atualizar' : 'Adicionar'}
         </button>
-        <button type="button" onClick={onClear}>Cancelar</button>
+        <button type="button" onClick={onClear}>Limpar</button>
 
-        </form>
+        </FormStyle>
     );
 }
