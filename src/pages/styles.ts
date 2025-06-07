@@ -14,12 +14,14 @@ export const Layout = styled.div`
   gap: 32px;
   align-items: flex-start;
   width: 100%;
+
+
 `;
 
 export const Left = styled.div`
-  flex: 1; /* 1 parte de 3 */
+  flex: 1; 
 `;
 
 export const Right = styled.div`
-  flex: 4; /* 2 partes de 3 */
+  flex: 4; 
 `;
