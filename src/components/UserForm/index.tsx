@@ -11,11 +11,10 @@ interface UserFormProps {
   loadingForm: boolean;
   errorForm: string | null;
   clearError: () => void;
-
-
+  onClear?: () => void;
 }
 
-export function UseForm({ initialData = null, onFinish, createUser, updateUser, loadingForm, errorForm, clearError  }: UserFormProps){
+export function UseForm({ initialData = null, onFinish, createUser, updateUser, loadingForm, errorForm, clearError,onClear  }: UserFormProps){
 
 
     const [name, setName] = useState('');
@@ -30,6 +29,12 @@ export function UseForm({ initialData = null, onFinish, createUser, updateUser, 
         setEmail(initialData.email);
         setCpf(initialData.cpf);
         setRole(initialData.role);
+        }else{
+            setName('');
+            setEmail('');
+            setCpf('');
+            setRole('USER');
+            console.log("Form Limpado")
         }
     }, [initialData]);
 
@@ -63,6 +68,7 @@ export function UseForm({ initialData = null, onFinish, createUser, updateUser, 
             </p>
         )}
 
+
         <input
             type="text"
             placeholder="Nome"
@@ -95,6 +101,8 @@ export function UseForm({ initialData = null, onFinish, createUser, updateUser, 
         <button type="submit" disabled={loadingForm}>
             {loadingForm ? 'Salvando...' : initialData ? 'Atualizar' : 'Adicionar'}
         </button>
+        <button type="button" onClick={onClear}>Cancelar</button>
+
         </form>
     );
 }

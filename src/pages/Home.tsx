@@ -28,6 +28,10 @@ function handleDelete(id:number) {
 function handleUpdate(userData:any) {
   setInitialData(userData);
 }
+
+function handleClear() {
+  setInitialData(null);
+}
     return (
     <div>
       <h1>Usuários</h1>
@@ -39,6 +43,7 @@ function handleUpdate(userData:any) {
         loadingForm={loadingForm}
         errorForm={errorForm}
         clearError={clearError}
+        onClear={handleClear}
       />
       <UserList
         users={users}
